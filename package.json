@@ -1,0 +1,30 @@
+{
+  "name": "rtrd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev-client": "cd client && ng serve",
+    "dev-server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run dev-client\" \"npm run dev-server\"",
+    "install": "npm install --prefix server && npm install --prefix client",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZioVio/RTRD.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZioVio/RTRD/issues"
+  },
+  "homepage": "https://github.com/ZioVio/RTRD#readme",
+  "dependencies": {
+    "concurrently": "^5.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1"
+  }
+}

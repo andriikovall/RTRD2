@@ -1,0 +1,162 @@
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark  light-blue lighten-1 ie-nav " [containerInside]="false">
+  <mdb-navbar-brand>
+    <a class="logo navbar-brand" [routerLink]="['/']"><strong>Наша штука</strong></a>
+  </mdb-navbar-brand>
+  <links>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item  {{link.active ? 'active' : ''}} waves-light" *ngFor="let link of links" mdbWavesEffect>
+        <a class="nav-link" (click)="onLinkClicked(link)" [routerLink]="link.path">{{link.label}}
+        </a>
+      </li>
+      <li class="nav-item waves-light" mdbWavesEffect>
+        <a class="nav-link" (click)="onEventCreatingClicked()"><b> Створити Подію<mdb-icon fas icon="plus">
+            </mdb-icon></b></a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <ng-container *ngIf="authService.isAuthenticated; else elseTemplate">
+        <li class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link">Мій профіль</a>
+        </li>
+        <li class="nav-item waves-light" (click)="authService.logout()" mdbWavesEffect>
+          <a class="nav-link">Вихід</a>
+        </li>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <li class="nav-item waves-light" (click)="onRegisterClicked()" mdbWavesEffect>
+          <a class="nav-link">Реєстрація</a>
+        </li>
+        <li class="nav-item waves-light" (click)="onLoginClicked()" mdbWavesEffect>
+          <a class="nav-link">Вхід</a>
+        </li>
+      </ng-template>
+
+    </ul>
+  </links>
+</mdb-navbar>
+
+<div mdbModal #loginModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- <div class="modal-header"></div> -->
+      <div class="modal-body">
+        <!-- <form class="text-center" action="#!"> -->
+
+        <p class="h4 mb-4">Вхід</p>
+        <input type="login" [(ngModel)]="login" class="form-control mb-4" placeholder="Логін" required>
+
+        <input type="password" [(ngModel)]="password" class="form-control mb-4" placeholder="Password" required>
+
+        <div class="d-flex justify-content-around">
+          <div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input">
+              <label class="custom-control-label">Remember me</label>
+            </div>
+          </div>
+          <div>
+            <a href="">Забули пароль?</a>
+          </div>
+        </div>
+
+        <button class="btn btn-info btn-block my-4" type="submit" (click)="onLoginConfirm()">Увійти</button>
+
+        <div class="d-flex justify-content-around">
+          <p>Не маєте аккаунту?
+            <button mdbBtn type="button" color="info" outline="true" (click)="onRegisterClicked()"
+              mdbWavesEffect>Зареєструватися</button>
+          </p>
+        </div>
+
+        <!-- <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
+          <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
+          <a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in light-blue-text"></i></a>
+          <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a> -->
+
+        <!-- </form> -->
+      </div>
+      <!-- <div class="modal-footer">
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
+<div mdbModal #registerModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- <form class="text-center" action="#!"> -->
+        <p class="h4 mb-4">Реєстрація</p>
+        <!-- <div class="md-form"> -->
+        <input type="login" [(ngModel)]="login" id="defaultLoginFormEmail" class="form-control mb-4"
+          placeholder="Логін">
+        <input type="password" [(ngModel)]="password" class="form-control mb-4" placeholder="Пароль">
+        <input type="password" [(ngModel)]="passwordRepeat" class="form-control mb-4" id="passwordRepeat"
+          placeholder="Повторіть пароль">
+        <small *ngIf="passwordRepeat !== password">Паролі відрізняються</small>
+        <!-- </div> -->
+
+        <!-- <div class="d-flex justify-content-around">
+                <div>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+                    <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
+                  </div>
+                </div>
+              </div> -->
+
+        <button class="btn btn-info btn-block my-4" (click)="onRegisterConfirm()" type="submit"
+          [disabled]="passwordRepeat !== password">Зареєструватися</button>
+
+        <!-- <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
+              <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
+              <a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in light-blue-text"></i></a>
+              <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a> -->
+
+        <!-- </form> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mdbModal #event="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+  aria-hidden="true">
+  <form [formGroup]="eventForm" (ngSubmit)="onEventSubmit($event)">
+
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100">Створення події:</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="eventModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+          <div class="md-form mb-5">
+            <input type="text" id="name" class="form-control" formControlName="name" mdbInput>
+            <label for="name">Назва події</label>
+          </div>
+
+          <div class="md-form mb-4">
+            <input type="date" id="date" class="form-control" formControlName="date" mdbInput>
+            <label for="date">Дата</label>
+          </div>
+
+          <div class="md-form mb-5">
+            <textarea id="bio" class="md-textarea md-textarea-auto form-control" formControlName="bio"
+              mdbInput></textarea>
+            <label for="bio">Опис події</label>
+          </div>
+
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button mdbBtn color="deep-orange " type="submit" class="waves-light" mdbWavesEffect>Підтвердити</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

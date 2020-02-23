@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="row mt-1">
+    <div class="col-lg-3">
+      <button mdbBtn color="primary" block="true" class="waves-light mt-1 mb-1" type="button" (click)="test.toggle()"
+        mdbWavesEffect>
+        Фільтри
+      </button>
+      <div class="container">
+        <div class="row" mdbCollapse #test="bs-collapse" style="width: 80%;">
+          <button mdbBtn color="primary" block="true" class="waves-light ml-0" type="button" (click)="region.toggle()"
+            mdbWavesEffect>
+            Регіони
+          </button>
+
+          <div class="" mdbCollapse #region="bs-collapse">
+            <mdb-checkbox [checked]="true" [default]="true">Голосіївський</mdb-checkbox>
+            <mdb-checkbox [checked]="true" [default]="true">Дарницький</mdb-checkbox>
+            <mdb-checkbox [checked]="true" [default]="true">Деснянський</mdb-checkbox>
+            <mdb-checkbox [checked]="true" [default]="true">Дніпровський</mdb-checkbox>
+            <mdb-checkbox [checked]="true" [default]="true">Оболонський</mdb-checkbox>
+            <mdb-checkbox [checked]="true" [default]="true">Печерський</mdb-checkbox>
+            <mdb-checkbox [checked]="true" [default]="true">Подільський</mdb-checkbox>
+            <mdb-checkbox [checked]="true" [default]="true">Святошинський</mdb-checkbox>
+            <mdb-checkbox [checked]="true" [default]="true">Солом'янський</mdb-checkbox>
+            <mdb-checkbox [checked]="true" [default]="true">Шевченківський</mdb-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <ng-container *ngFor="let event of events">
+        <mdb-card class="mb-3 mt-2 event-card">
+          <!-- <mdb-card-header>Title</mdb-card-header> -->
+          <mdb-card-body>
+            <div class="row">
+              <div class="col-lg-8 col-md-10 col-sm-10" [routerLink]="['/event', event._id]" style="cursor: pointer;">
+                <mdb-card-title>
+                  <h5>{{event.name || 'Подія без назви'}}</h5>
+                </mdb-card-title>
+                <mdb-card-text>{{event.bio || 'Подія без опису'}}
+                </mdb-card-text>
+              </div>
+              <div class="col-lg-1 col-md-1 col-sm-1 counter">
+                <div class="row">
+                  <mdb-icon fas icon="caret-up" size="2x" class="green-text"></mdb-icon>
+                </div>
+                <div class="row" style="padding-left: 18%;">
+                  {{event.vote}}
+                </div>
+                <div class="row">
+                  <mdb-icon fas icon="caret-down" size="2x" class="red-text"></mdb-icon>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-12 col-sm-12">
+                <p>Топ спонсори</p>
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-action waves-light" *ngFor="let sponsor of event.sponsors">{{sponsor.user.login}}</li>
+                </ul>
+
+              </div>
+            </div>
+            <!-- <div class="text-right">
+            <a href="" mdbBtn color="primary">Підтримати</a>
+          </div> -->
+          </mdb-card-body>
+          <mdb-card-footer class="text-muted">
+            <div class="row">
+              <div class="col-8">
+                <address>
+                  <mdb-icon fas icon="map-marker-alt"></mdb-icon> {{event.address || 'Немає адреси'}}
+                </address>
+              </div>
+              <div class="col text-right">
+                <time>
+                  <div class="row">
+                    <div class="col">
+                      <mdb-icon fas icon="clock"></mdb-icon>19-30
+                    </div>
+                    <div class="col">
+                      <mdb-icon far icon="calendar-alt"></mdb-icon> 25 квітня
+                    </div>
+                  </div>
+                </time>
+              </div>
+            </div>
+          </mdb-card-footer>
+        </mdb-card>
+      </ng-container>
+    </div>
+  </div>
+</div>

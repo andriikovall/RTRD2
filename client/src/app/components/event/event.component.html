@@ -1,0 +1,145 @@
+<div class="container">
+  <section>
+    <div class="row">
+      <div class="jumbotron" style="width: 100%;">
+        <div class="row">
+
+          <div class="col-lg-8">
+            <h2 class="display-4">{{event.name}}</h2>
+            <p class="lead">{{event.bio}}
+            </p>
+            <hr class="my-4">
+            <p>
+            </p>
+          </div>
+          <div class="col-lg-4">
+            <div class="row">
+              <div class="col-lg-1 col-md-1 col-sm-1 col-1 counter">
+                <div class="row">
+                  <mdb-icon fas icon="caret-up" size="3x" class="green-text"></mdb-icon>
+                </div>
+                <div class="row" style="padding-left: 50%; font-size: 1.4em;">
+                  {{event.vote}}
+                </div>
+                <div class="row">
+                  <mdb-icon fas icon="caret-down" size="3x" class="red-text"></mdb-icon>
+                </div>
+              </div>
+              <div class="col">
+                <p>Топ спонсори</p>
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-action waves-light" *ngFor="let sponsor of event.sponsors">
+                    {{sponsor.user.login || 'no sponsor'}}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="row d-flex mt-5 justify-content-around">
+              <button type="button" mdbBtn color="success" mdbWavesEffect>Пілписатися</button>
+              <button mdbBtn type="button" color="info" outline="true" mdbWavesEffect>Донат</button>
+            </div>
+          </div>
+        </div>
+        <div class="author">
+          <p>Автор:
+            <a href="#">
+              <p>{{event.author}}</p>
+            </a>
+          </p>
+        </div>
+        <div class="report">
+          <button mdbBtn type="button" color="warning" outline="true" mdbWavesEffect
+            (click)="onReportClicked()">Залишити скаргу</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <caption>Коментарі</caption>
+    <ul class="list-group" id="comments">
+      <li class="list-group-item list-group-item-action">
+
+
+        <div class="comment row">
+          <div class="comment-image col-lg-1 col-md-2 col-sm-2 col-4">
+            <img style="border-radius: 50%;"
+              src="https://lh3.googleusercontent.com/proxy/xoC1nZgejmyWHLjMDK5jQtrlZQbOmG0roqow5av8XqvMGEeNqN3rDlO54s5tMjkV_6aEBfCdy0qoE2lmYFDrlicO6-5MQJWq5HqGEYF6-2r_OCvrSxaoqJOmbP5GYjV5ZM5O-w"
+              alt="user avatar">
+          </div>
+          <div class="comment-body col-lg-11 col-md-10 col-sm-8 col-8">
+            <div class="col">
+              <div class="row">
+                <caption>Имя фамілія</caption>
+              </div>
+              <div class="row">
+                <p>lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem
+                  ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem
+                  ipsumlorem ipsumlorem ipsumlorem
+                  ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem
+                  ipsumlorem ipsumlorem ipsumlorem ipsum</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item list-group-item-action">
+        <div class="comment row">
+          <div class="comment-image col-lg-1 col-md-2 col-sm-2 col-4">
+            <img style="border-radius: 50%;"
+              src="https://lh3.googleusercontent.com/proxy/xoC1nZgejmyWHLjMDK5jQtrlZQbOmG0roqow5av8XqvMGEeNqN3rDlO54s5tMjkV_6aEBfCdy0qoE2lmYFDrlicO6-5MQJWq5HqGEYF6-2r_OCvrSxaoqJOmbP5GYjV5ZM5O-w"
+              alt="user avatar">
+          </div>
+          <div class="comment-body col-lg-11 col-md-10 col-sm-8 col-8">
+            <div class="col">
+              <div class="row">
+                <caption>Имя фамілія</caption>
+              </div>
+              <div class="row">
+                <p>lorem ipsum</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </li>
+    </ul>
+    <div class="md-form">
+      <textarea type="text" id="comment-form" class="md-textarea md-textarea-auto form-control" rows="2"
+        mdbInput></textarea>
+      <label for="form7">Додати коментар</label>
+    </div>
+    <div class="text-right">
+      <button class="ml-auto" mdbBtn type="button" color="default" mdbWavesEffect>Додати коментар</button>
+    </div>
+  </section>
+</div>
+
+
+
+<div mdbModal #reportModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p class="h4 mb-4">Залишити скаргу</p>
+        <ng-container *ngIf="!reported; else elseTemplate">
+          <mdb-checkbox [checked]="true" [default]="true">Спам</mdb-checkbox>
+          <mdb-checkbox [checked]="true" [default]="true">Насилля</mdb-checkbox>
+          <mdb-checkbox [checked]="true" [default]="true">Кримінал</mdb-checkbox>
+          <mdb-checkbox [checked]="true" [default]="true">Шахрайство</mdb-checkbox>
+          <div class="md-form">
+            <textarea type="text" id="comment-form" class="md-textarea md-textarea-auto form-control" rows="2"
+              mdbInput></textarea>
+            <label for="form7">Додати коментар</label>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <p>Дякуємо, Ваша скарга прийнята</p>
+          <mdb-icon fas icon="check"></mdb-icon>
+        </ng-template>
+      </div>
+      <div class="modal-footer">
+        <button mdbBtn type="button" color="default" outline="true" mdbWavesEffect (click)="onReportConfirmed()">Подати скаргу</button>
+      </div>
+    </div>
+  </div>
+</div>
